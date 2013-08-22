@@ -10,9 +10,9 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.plugin.Plugin;
 
 import org.kitteh.vanish.VanishPerms;
-import org.kitteh.vanish.event.VanishStatusChangeEvent;
 
 public class jm_listeners implements Listener{
 	
@@ -20,32 +20,6 @@ public class jm_listeners implements Listener{
 	
 	public jm_listeners(joinmessages plugin){
 		this.plugin = plugin;
-	}
-	
-	@EventHandler(priority = EventPriority.LOW)
-	public void onVanishEvent(VanishStatusChangeEvent e){
-		Player p = e.getPlayer();
-		
-		if (e.isVanishing() == true){
-			String introMessage = plugin.getConfig().getString("introMessage");
-			
-			plugin.getConfig().set("Users." + e.getPlayer().getName() + ".vanished", true);
-			plugin.saveConfig();
-			if (VanishPerms.joinWithoutAnnounce(p) || VanishPerms.joinVanished(p)){
-				e.getPlayer().sendMessage(introMessage + " §7You are now omit from sending join and leave messages.");
-				return;
-			}
-			e.getPlayer().sendMessage(introMessage + " §7You are now omit from sending leave messages.");
-			return;
-		}
-		String introMessage = plugin.getConfig().getString("introMessage");
-		plugin.getConfig().set("Users", null);
-		plugin.saveConfig();
-		if (VanishPerms.joinWithoutAnnounce(p) || VanishPerms.joinVanished(p)){
-			e.getPlayer().sendMessage(introMessage + " §7You are no longer omit from sending join and leave messages.");
-			return;
-		}
-		e.getPlayer().sendMessage(introMessage + " §7You are no longer omit from sending leave messages.");
 	}
 	
 	@EventHandler(priority = EventPriority.MONITOR)
@@ -57,10 +31,13 @@ public class jm_listeners implements Listener{
 		final String joinMessage = joinMessages.get(randomNumber);
 		final String messageColour = plugin.getConfig().getString("messageColour");
 		final String nameColour = plugin.getConfig().getString("nameColour");
+		Plugin VanishNoPacket = plugin.getServer().getPluginManager().getPlugin("VanishNoPacket");
 		
 		e.setJoinMessage(null);
-		if (VanishPerms.joinWithoutAnnounce(p) || VanishPerms.joinVanished(p)){
-			return;
+		if (VanishNoPacket != null){
+			if (VanishPerms.joinWithoutAnnounce(p) || VanishPerms.joinVanished(p)){
+				return;
+			}
 		}
 		plugin.getConfig().set("Users", null);
 		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin,

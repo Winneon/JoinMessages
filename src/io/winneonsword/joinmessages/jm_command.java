@@ -24,7 +24,7 @@ public class jm_command implements CommandExecutor{
 			
 			if (args.length == 0){
 				// Name & version number.
-				sender.sendMessage(introMessage + " §7Join Messages, v1.2-o");
+				sender.sendMessage(introMessage + " §7Join Messages, v1.2.1-o");
 				return true;
 			}
 			if (args[0].equalsIgnoreCase("?") || args[0].equalsIgnoreCase("help")){
@@ -36,7 +36,7 @@ public class jm_command implements CommandExecutor{
 				sender.sendMessage("  §c/jm remove §7- Remove Message Help Menu. §8// §cStaff command");
 				sender.sendMessage("      §conly!");
 				sender.sendMessage("  §c/jm reload §7- Reloads the config file. §8// §cStaff command only!");
-				sender.sendMessage("§7Created by WS, v1.2-o");
+				sender.sendMessage("§7Created by WS, v1.2.1-o");
 				return true;
 			}
 			if (args[0].equalsIgnoreCase("list") && args.length == 1){
