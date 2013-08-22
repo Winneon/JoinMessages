@@ -19,11 +19,12 @@ public class jm_command implements CommandExecutor{
 		if(cmd.getName().equalsIgnoreCase("jm")){
 			String introMessage = plugin.getConfig().getString("introMessage");
 			String messageColour = plugin.getConfig().getString("messageColour");
+			String nameColour = plugin.getConfig().getString("nameColour");
 			Player player = (Player) sender;
 			
 			if (args.length == 0){
 				// Name & version number.
-				sender.sendMessage(introMessage + " §7Join Messages, v1.1-o");
+				sender.sendMessage(introMessage + " §7Join Messages, v1.2-o");
 				return true;
 			}
 			if (args[0].equalsIgnoreCase("?") || args[0].equalsIgnoreCase("help")){
@@ -35,7 +36,7 @@ public class jm_command implements CommandExecutor{
 				sender.sendMessage("  §c/jm remove §7- Remove Message Help Menu. §8// §cStaff command");
 				sender.sendMessage("      §conly!");
 				sender.sendMessage("  §c/jm reload §7- Reloads the config file. §8// §cStaff command only!");
-				sender.sendMessage("§7Created by WS, v1.1-o");
+				sender.sendMessage("§7Created by WS, v1.2-o");
 				return true;
 			}
 			if (args[0].equalsIgnoreCase("list") && args.length == 1){
@@ -55,7 +56,7 @@ public class jm_command implements CommandExecutor{
 				for (int i = 1; i < joinMessageList.size() + 1; i++){
 					String message = joinMessageList.get(i - 1);
 					
-					sender.sendMessage("  §7[§c" + i + "§7] §" + messageColour + message.replace("%p", "§" + messageColour + player.getDisplayName() + "§" + messageColour).replace(" ", " §" + messageColour));
+					sender.sendMessage("  §7[§c" + i + "§7] §" + messageColour + message.replace("%p", "§" + nameColour + player.getDisplayName() + "§" + messageColour).replace(" ", " §" + messageColour));
 				}
 				return true;
 			}
@@ -67,7 +68,7 @@ public class jm_command implements CommandExecutor{
 				for (int i = 1; i < leaveMessageList.size() + 1; i++){
 					String message = leaveMessageList.get(i - 1);
 					
-					sender.sendMessage("  §7[§c" + i + "§7] §" + messageColour + message.replace("%p", "§" + messageColour + player.getDisplayName() + "§" + messageColour).replace(" ", " §" + messageColour));
+					sender.sendMessage("  §7[§c" + i + "§7] §" + messageColour + message.replace("%p", "§" + nameColour + player.getDisplayName() + "§" + messageColour).replace(" ", " §" + messageColour));
 				}
 				return true;
 			}
@@ -80,58 +81,64 @@ public class jm_command implements CommandExecutor{
 			}
 			if (args[0].equalsIgnoreCase("add") && args[1].equalsIgnoreCase("join")){
 				// The /jm add join <message> command.
-				if (args.length == 2){
-					sender.sendMessage(introMessage + " §7Usage: §c/jm add join <message>");
+				if (player.hasPermission("joinmessages.add") || player.hasPermission("joinmessages.add.join")){
+					if (args.length == 2){
+						sender.sendMessage(introMessage + " §7Usage: §c/jm add join <message>");
+						return true;
+					}
+					StringBuilder initial = new StringBuilder();
+					
+					for (int i = 2; i < args.length; i++){
+						initial.append(' ').append(args[i]);
+					}
+					String message = initial.toString().replaceFirst(" ", "");
+					
+					if (!(message.contains("%p"))){
+						sender.sendMessage(introMessage + " §cYou have not defined a playername! §7Be sure to include §c%p §7in your message to define the playername.");
+						return true;
+					}
+					List<String> joinMessageList = plugin.getConfig().getStringList("joinMessages");
+					int joinMessageID = joinMessageList.size() + 1;
+					
+					joinMessageList.add(message);
+					plugin.getConfig().set("joinMessages", joinMessageList);
+					plugin.saveConfig();
+					sender.sendMessage(introMessage + " §7Successfully added a join message. The message ID is §c" + joinMessageID + "§7.");
+					sender.sendMessage(introMessage + " §7Here is what it will look like:");
+					sender.sendMessage("§" + messageColour + message.replace("%p", "§" + nameColour + player.getDisplayName() + "§" + messageColour).replace(" ", " §" + messageColour));
 					return true;
 				}
-				StringBuilder initial = new StringBuilder();
-				
-				for (int i = 2; i < args.length; i++){
-					initial.append(' ').append(args[i]);
-				}
-				String message = initial.toString().replaceFirst(" ", "");
-				
-				if (!(message.contains("%p"))){
-					sender.sendMessage(introMessage + " §cYou have not defined a playername! §7Be sure to include §c%p §7in your message to define the playername.");
-					return true;
-				}
-				List<String> joinMessageList = plugin.getConfig().getStringList("joinMessages");
-				int joinMessageID = joinMessageList.size() + 1;
-				
-				joinMessageList.add(message);
-				plugin.getConfig().set("joinMessages", joinMessageList);
-				plugin.saveConfig();
-				sender.sendMessage(introMessage + " §7Successfully added a join message. The message ID is §c" + joinMessageID + "§7.");
-				sender.sendMessage(introMessage + " §7Here is what it will look like:");
-				sender.sendMessage("§" + messageColour + message.replace("%p", "§" + messageColour + player.getDisplayName() + "§" + messageColour).replace(" ", " §" + messageColour));
 				return true;
 			}
 			if (args[0].equalsIgnoreCase("add") && args[1].equalsIgnoreCase("leave")){
 				// The /jm add leave <message> command.
-				if (args.length == 2){
-					sender.sendMessage(introMessage + " §7Usage: §c/jm add leave <message>");
+				if (player.hasPermission("joinmessages.add") || player.hasPermission("joinmessages.add.leave")){
+					if (args.length == 2){
+						sender.sendMessage(introMessage + " §7Usage: §c/jm add leave <message>");
+						return true;
+					}
+					StringBuilder initial = new StringBuilder();
+					
+					for (int i = 2; i < args.length; i++){
+						initial.append(' ').append(args[i]);
+					}
+					String message = initial.toString().replaceFirst(" ", "");
+					
+					if (!(message.contains("%p"))){
+						sender.sendMessage(introMessage + " §cYou have not defined a playername! §7Be sure to include §c%p §7in your message to define the playername.");
+						return true;
+					}
+					List<String> leaveMessageList = plugin.getConfig().getStringList("leaveMessages");
+					int leaveMessageID = leaveMessageList.size() + 1;
+					
+					leaveMessageList.add(message);
+					plugin.getConfig().set("leaveMessages", leaveMessageList);
+					plugin.saveConfig();
+					sender.sendMessage(introMessage + " §7Successfully added a leave message. The message ID is §c" + leaveMessageID + "§7.");
+					sender.sendMessage(introMessage + " §7Here is what it will look like:");
+					sender.sendMessage("§" + messageColour + message.replace("%p", "§" + nameColour + player.getDisplayName() + "§" + messageColour).replace(" ", " §" + messageColour));
 					return true;
 				}
-				StringBuilder initial = new StringBuilder();
-				
-				for (int i = 2; i < args.length; i++){
-					initial.append(' ').append(args[i]);
-				}
-				String message = initial.toString().replaceFirst(" ", "");
-				
-				if (!(message.contains("%p"))){
-					sender.sendMessage(introMessage + " §cYou have not defined a playername! §7Be sure to include §c%p §7in your message to define the playername.");
-					return true;
-				}
-				List<String> leaveMessageList = plugin.getConfig().getStringList("leaveMessages");
-				int leaveMessageID = leaveMessageList.size() + 1;
-				
-				leaveMessageList.add(message);
-				plugin.getConfig().set("leaveMessages", leaveMessageList);
-				plugin.saveConfig();
-				sender.sendMessage(introMessage + " §7Successfully added a leave message. The message ID is §c" + leaveMessageID + "§7.");
-				sender.sendMessage(introMessage + " §7Here is what it will look like:");
-				sender.sendMessage("§" + messageColour + message.replace("%p", "§" + messageColour + player.getDisplayName() + "§" + messageColour).replace(" ", " §" + messageColour));
 				return true;
 			}
 			if (args[0].equalsIgnoreCase("remove") && args.length == 1){
@@ -145,66 +152,72 @@ public class jm_command implements CommandExecutor{
 			}
 			if (args[0].equalsIgnoreCase("remove") && args[1].equalsIgnoreCase("join")){
 				// The /jm remove join <message> command.
-				if (args.length == 2){
-					sender.sendMessage(introMessage + " §7Usage: §c/jm remove join <ID>§7. To view message IDs, type §c/jm list§7.");
+				if (player.hasPermission("joinmessages.remove") || player.hasPermission("joinmessages.remove.join")){
+					if (args.length == 2){
+						sender.sendMessage(introMessage + " §7Usage: §c/jm remove join <ID>§7. To view message IDs, type §c/jm list§7.");
+						return true;
+					}
+					List<String> joinMessageList = plugin.getConfig().getStringList("joinMessages");
+					try {
+						Integer.parseInt(args[2]);
+					} catch (NumberFormatException e){
+						sender.sendMessage(introMessage + " §cThe ID you entered is not a number!");
+						return true;
+					}
+					if (joinMessageList.size() < Integer.parseInt(args[2])){
+						sender.sendMessage(introMessage + " §cThere is no join message with the ID specified!");
+						return true;
+					}
+					if (joinMessageList.size() == 1){
+						sender.sendMessage(introMessage + " §cThere is only 1 message left! Add another before you remove this message.");
+						return true;
+					}
+					int joinMessageID = Integer.parseInt(args[2]);
+					String message = joinMessageList.get(joinMessageID - 1);
+					
+					joinMessageList.remove(message);
+					plugin.getConfig().set("joinMessages", joinMessageList);
+					plugin.saveConfig();
+					sender.sendMessage(introMessage + " §7Successfully removed the join message which goes by the ID of §c" + joinMessageID + "§7.");
+					sender.sendMessage(introMessage + " §7Here is the message you removed:");
+					sender.sendMessage("§" + messageColour + message.replace("%p", "§" + nameColour + player.getDisplayName() + "§" + messageColour).replace(" ", " §" + messageColour));
 					return true;
 				}
-				List<String> joinMessageList = plugin.getConfig().getStringList("joinMessages");
-				try {
-					Integer.parseInt(args[2]);
-				} catch (NumberFormatException e){
-					sender.sendMessage(introMessage + " §cThe ID you entered is not a number!");
-					return true;
-				}
-				if (joinMessageList.size() < Integer.parseInt(args[2])){
-					sender.sendMessage(introMessage + " §cThere is no join message with the ID specified!");
-					return true;
-				}
-				if (joinMessageList.size() == 1){
-					sender.sendMessage(introMessage + " §cThere is only 1 message left! Add another before you remove this message.");
-					return true;
-				}
-				int joinMessageID = Integer.parseInt(args[2]);
-				String message = joinMessageList.get(joinMessageID - 1);
-				
-				joinMessageList.remove(message);
-				plugin.getConfig().set("joinMessages", joinMessageList);
-				plugin.saveConfig();
-				sender.sendMessage(introMessage + " §7Successfully removed the join message which goes by the ID of §c" + joinMessageID + "§7.");
-				sender.sendMessage(introMessage + " §7Here is the message you removed:");
-				sender.sendMessage("§" + messageColour + message.replace("%p", "§" + messageColour + player.getDisplayName() + "§" + messageColour).replace(" ", " §" + messageColour));
 				return true;
 			}
 			if (args[0].equalsIgnoreCase("remove") && args[1].equalsIgnoreCase("leave")){
 				// The /jm remove join <message> command.
-				if (args.length == 2){
-					sender.sendMessage(introMessage + " §7Usage: §c/jm remove leave <ID>§7. To view message IDs, type §c/jm list§7.");
+				if (player.hasPermission("joinmessages.remove") || player.hasPermission("joinmessages.remove.leave")){
+					if (args.length == 2){
+						sender.sendMessage(introMessage + " §7Usage: §c/jm remove leave <ID>§7. To view message IDs, type §c/jm list§7.");
+						return true;
+					}
+					List<String> leaveMessageList = plugin.getConfig().getStringList("leaveMessages");
+					try {
+						Integer.parseInt(args[2]);
+					} catch (NumberFormatException e){
+						sender.sendMessage(introMessage + " §cThe ID you entered is not a number!");
+						return true;
+					}
+					if (leaveMessageList.size() < Integer.parseInt(args[2])){
+						sender.sendMessage(introMessage + " §cThere is no leave message with the ID specified!");
+						return true;
+					}
+					if (leaveMessageList.size() == 1){
+						sender.sendMessage(introMessage + " §cThere is only 1 message left! Add another before you remove this message.");
+						return true;
+					}
+					int leaveMessageID = Integer.parseInt(args[2]);
+					String message = leaveMessageList.get(leaveMessageID - 1);
+					
+					leaveMessageList.remove(message);
+					plugin.getConfig().set("leaveMessages", leaveMessageList);
+					plugin.saveConfig();
+					sender.sendMessage(introMessage + " §7Successfully removed the leave message which goes by the ID of §c" + leaveMessageID + "§7.");
+					sender.sendMessage(introMessage + " §7Here is the message you removed:");
+					sender.sendMessage("§" + messageColour + message.replace("%p", "§" + nameColour + player.getDisplayName() + "§" + messageColour).replace(" ", " §" + messageColour));
 					return true;
 				}
-				List<String> leaveMessageList = plugin.getConfig().getStringList("leaveMessages");
-				try {
-					Integer.parseInt(args[2]);
-				} catch (NumberFormatException e){
-					sender.sendMessage(introMessage + " §cThe ID you entered is not a number!");
-					return true;
-				}
-				if (leaveMessageList.size() < Integer.parseInt(args[2])){
-					sender.sendMessage(introMessage + " §cThere is no leave message with the ID specified!");
-					return true;
-				}
-				if (leaveMessageList.size() == 1){
-					sender.sendMessage(introMessage + " §cThere is only 1 message left! Add another before you remove this message.");
-					return true;
-				}
-				int leaveMessageID = Integer.parseInt(args[2]);
-				String message = leaveMessageList.get(leaveMessageID - 1);
-				
-				leaveMessageList.remove(message);
-				plugin.getConfig().set("leaveMessages", leaveMessageList);
-				plugin.saveConfig();
-				sender.sendMessage(introMessage + " §7Successfully removed the leave message which goes by the ID of §c" + leaveMessageID + "§7.");
-				sender.sendMessage(introMessage + " §7Here is the message you removed:");
-				sender.sendMessage("§" + messageColour + message.replace("%p", "§" + messageColour + player.getDisplayName() + "§" + messageColour).replace(" ", " §" + messageColour));
 				return true;
 			}
 			if (args[0].equalsIgnoreCase("reload")){
