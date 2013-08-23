@@ -1,6 +1,6 @@
 name: Join Messages
 main: io.winneonsword.joinmessages.joinmessages
-version: 1.2.2-o
+version: 1.2.1-o
 commands:
   jm:
     description: Host command.
