@@ -19,12 +19,6 @@ public final class joinmessages extends JavaPlugin {
 	public final jm_listeners Listener = new jm_listeners(this);
 	public final vanish_listener vanishListener = new vanish_listener(this);
 	
-	@SuppressWarnings(value = "unused")
-	private String latestVersion = null;
-	
-	@SuppressWarnings("unused")
-	private boolean versionDiff = false;
-	
 	private final class updateCheck implements Runnable{
 		private joinmessages plugin;
 		
@@ -46,13 +40,24 @@ public final class joinmessages extends JavaPlugin {
 				connection.setReadTimeout(15000);
 				connection.setRequestProperty("User-agent", "Join Messages");
 				final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-				String version;
-				if ((version = bufferedReader.readLine()) != null){
-					latestVersion = version;
+				String version = bufferedReader.readLine();
+				if (version != null){
+					if (pluginVersion.contains("-a")){
+						getLogger().info("You are using a ALPHA version!");
+						getLogger().info("There will be bugs, so try to help by reporting them in an issue at:");
+						getLogger().info("https://github.com/WinneonSword/Join-Messages");
+						return;
+					}
+					if (pluginVersion.contains("-b")){
+						getLogger().info("You are using a BETA version!");
+						getLogger().info("This is slightly more stable than an ALPHA version, but still try to report bugs at:");
+						getLogger().info("https://github.com/WinneonSword/Join-Messages");
+						return;
+					}
 					if (!(pluginVersion.equals(version))){
 						getLogger().info("Found a newer version of Join Messages available: " + version);
 						getLogger().info("To download the newest version, go to: http://dev.bukkit.org/bukkit-plugins/join-messages/");
-						versionDiff = true;
+						return;
 					}
 					return;
 				}
