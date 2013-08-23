@@ -66,7 +66,7 @@ public final class joinmessages extends JavaPlugin {
 			} catch (final Exception e){
 				
 			}
-			getLogger().severe("Could not check if plugin was up to date!");
+			getLogger().severe("Could not check if plugin was up to date! Is the file missing, or is the server down?");
 		}
 	}
 	
