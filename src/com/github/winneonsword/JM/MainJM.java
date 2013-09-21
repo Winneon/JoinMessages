@@ -59,13 +59,13 @@ public final class MainJM extends JavaPlugin {
 				String version = sb.toString();
 				if (version != null){
 					if (pluginVersion.contains("-a")){
-						getLogger().info("You are using a ALPHA version!");
+						getLogger().info("You are using a ALPHA version of JM!");
 						getLogger().info("There will be bugs, so try to help by reporting them in an issue at:");
 						getLogger().info("https://github.com/WinneonSword/Join-Messages");
 						return;
 					}
 					if (pluginVersion.contains("-b")){
-						getLogger().info("You are using a BETA version!");
+						getLogger().info("You are using a BETA version of JM!");
 						getLogger().info("This is slightly more stable than an ALPHA version, but still try to report bugs at:");
 						getLogger().info("https://github.com/WinneonSword/Join-Messages");
 						return;
