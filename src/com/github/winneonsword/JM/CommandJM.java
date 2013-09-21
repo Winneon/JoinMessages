@@ -2,16 +2,20 @@ package com.github.winneonsword.JM;
 
 import java.util.List;
 
+//import net.milkbowl.vault.permission.Permission;
+
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+//import org.bukkit.plugin.Plugin;
 
 import static com.github.winneonsword.CMAPI.API.ChatAPI.*;
 
 public class CommandJM implements CommandExecutor{
 	
 	private MainJM plugin;
+	//private static Permission perm;
 	
 	public CommandJM(MainJM plugin){
 		this.plugin = plugin;
@@ -23,10 +27,11 @@ public class CommandJM implements CommandExecutor{
 			String messageColour = plugin.ConfigJM.getString("messageColour");
 			String nameColour = plugin.ConfigJM.getString("nameColour");
 			Player player = (Player) sender;
+			//Plugin Vault = plugin.getServer().getPluginManager().getPlugin("Vault");
 			
 			if (args.length == 0){
 				// Name & version number.
-				sender.sendMessage(rA(introMessage + " &7Join Messages, v1.3-o"));
+				sender.sendMessage(rA(introMessage + " &7Join Messages, v" + plugin.PluginJM.getString("version")));
 				return true;
 			}
 			if (args[0].equalsIgnoreCase("?") || args[0].equalsIgnoreCase("help")){
@@ -38,7 +43,7 @@ public class CommandJM implements CommandExecutor{
 				sender.sendMessage(rA("  &c/jm remove &7- Remove Message Help Menu. &8// &cStaff command"));
 				sender.sendMessage(rA("      &conly!"));
 				sender.sendMessage(rA("  &c/jm reload &7- Reloads the config file. &8// &cStaff command only!"));
-				sender.sendMessage(rA("&7Created by WS, v1.3-o"));
+				sender.sendMessage(rA("&7Created by WS, v" + plugin.PluginJM.getString("version")));
 				return true;
 			}
 			if (args[0].equalsIgnoreCase("list") && args.length == 1){
@@ -57,8 +62,11 @@ public class CommandJM implements CommandExecutor{
 				sender.sendMessage(rA(introMessage + " &7Join Messages:"));
 				for (int i = 1; i < joinMessageList.size() + 1; i++){
 					String message = joinMessageList.get(i - 1);
-					
-					sender.sendMessage(rA("  &7[&c" + i + "&7] &" + messageColour + message.replace("%p", "&" + nameColour + player.getDisplayName() + "&" + messageColour).replace(" ", " &" + messageColour)));
+					//String group = "";
+					//if (Vault != null){
+					//	group = perm.getPrimaryGroup(player);
+					//}
+					sender.sendMessage(rA("  &7[&c" + i + "&7] &" + messageColour + message.replace("%p", "&" + nameColour + player.getDisplayName() + "&" + messageColour)));
 				}
 				return true;
 			}
@@ -69,8 +77,11 @@ public class CommandJM implements CommandExecutor{
 				sender.sendMessage(rA(introMessage + " &7Leave Messages:"));
 				for (int i = 1; i < leaveMessageList.size() + 1; i++){
 					String message = leaveMessageList.get(i - 1);
-					
-					sender.sendMessage(rA("  &7[&c" + i + "&7] &" + messageColour + message.replace("%p", "&" + nameColour + player.getDisplayName() + "&" + messageColour).replace(" ", " &" + messageColour)));
+					//String group = "";
+					//if (Vault != null){
+					//	group = perm.getPrimaryGroup(player);
+					//}
+					sender.sendMessage(rA("  &7[&c" + i + "&7] &" + messageColour + message.replace("%p", "&" + nameColour + player.getDisplayName() + "&" + messageColour)));
 				}
 				return true;
 			}
@@ -104,10 +115,14 @@ public class CommandJM implements CommandExecutor{
 					
 					joinMessageList.add(message);
 					plugin.ConfigJM.set("joinMessages", joinMessageList);
-					plugin.saveConfig();
+					plugin.saveYMLs();
 					sender.sendMessage(rA(introMessage + " &7Successfully added a join message. The message ID is &c" + joinMessageID + "&7."));
 					sender.sendMessage(rA(introMessage + " &7Here is what it will look like:"));
-					sender.sendMessage(rA("&" + messageColour + message.replace("%p", "&" + nameColour + player.getDisplayName() + "&" + messageColour).replace(" ", " &" + messageColour)));
+					//String group = "";
+					//if (Vault != null){
+					//	group = perm.getPrimaryGroup(player);
+					//}
+					sender.sendMessage(rA("&" + messageColour + message.replace("%p", "&" + nameColour + player.getDisplayName() + "&" + messageColour)));
 					return true;
 				}
 				return true;
@@ -135,10 +150,14 @@ public class CommandJM implements CommandExecutor{
 					
 					leaveMessageList.add(message);
 					plugin.ConfigJM.set("leaveMessages", leaveMessageList);
-					plugin.saveConfig();
+					plugin.saveYMLs();
 					sender.sendMessage(rA(introMessage + " &7Successfully added a leave message. The message ID is &c" + leaveMessageID + "&7."));
 					sender.sendMessage(rA(introMessage + " &7Here is what it will look like:"));
-					sender.sendMessage(rA("&" + messageColour + message.replace("%p", "&" + nameColour + player.getDisplayName() + "&" + messageColour).replace(" ", " &" + messageColour)));
+					//String group = "";
+					//if (Vault != null){
+					//	group = perm.getPrimaryGroup(player);
+					//}
+					sender.sendMessage(rA("&" + messageColour + message.replace("%p", "&" + nameColour + player.getDisplayName() + "&" + messageColour)));
 					return true;
 				}
 				return true;
@@ -179,10 +198,14 @@ public class CommandJM implements CommandExecutor{
 					
 					joinMessageList.remove(message);
 					plugin.ConfigJM.set("joinMessages", joinMessageList);
-					plugin.saveConfig();
+					plugin.saveYMLs();
 					sender.sendMessage(rA(introMessage + " &7Successfully removed the join message which goes by the ID of &c" + joinMessageID + "&7."));
 					sender.sendMessage(rA(introMessage + " &7Here is the message you removed:"));
-					sender.sendMessage(rA("&" + messageColour + message.replace("%p", "&" + nameColour + player.getDisplayName() + "&" + messageColour).replace(" ", " &" + messageColour)));
+					//String group = "";
+					///if (Vault != null){
+					//	group = perm.getPrimaryGroup(player);
+					//}
+					sender.sendMessage(rA("&" + messageColour + message.replace("%p", "&" + nameColour + player.getDisplayName() + "&" + messageColour)));
 					return true;
 				}
 				return true;
@@ -214,10 +237,14 @@ public class CommandJM implements CommandExecutor{
 					
 					leaveMessageList.remove(message);
 					plugin.ConfigJM.set("leaveMessages", leaveMessageList);
-					plugin.saveConfig();
+					plugin.saveYMLs();
 					sender.sendMessage(rA(introMessage + " &7Successfully removed the leave message which goes by the ID of &c" + leaveMessageID + "&7."));
 					sender.sendMessage(rA(introMessage + " &7Here is the message you removed:"));
-					sender.sendMessage(rA("&" + messageColour + message.replace("%p", "&" + nameColour + player.getDisplayName() + "&" + messageColour).replace(" ", " &" + messageColour)));
+					//String group = "";
+					//if (Vault != null){
+					//	group = perm.getPrimaryGroup(player);
+					//}
+					sender.sendMessage(rA("&" + messageColour + message.replace("%p", "&" + nameColour + player.getDisplayName() + "&" + messageColour)));
 					return true;
 				}
 				return true;
@@ -225,7 +252,7 @@ public class CommandJM implements CommandExecutor{
 			if (args[0].equalsIgnoreCase("reload")){
 				// The reload command.
 				if (player.hasPermission("joinmessages.reload")){
-					plugin.reloadConfig();
+					plugin.loadYMLs();
 					sender.sendMessage(rA(introMessage + " &7Successfully reloaded the config file."));
 					return true;
 				}

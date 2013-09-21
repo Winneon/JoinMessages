@@ -14,6 +14,8 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.RegisteredServiceProvider;
+import net.milkbowl.vault.permission.Permission;
 
 public final class MainJM extends JavaPlugin {
 	
@@ -23,6 +25,8 @@ public final class MainJM extends JavaPlugin {
 	public File configFile;
 	public FileConfiguration PluginJM;
 	public FileConfiguration ConfigJM;
+	
+	public static Permission perms = null;
 	
 	public MainJM(){
 		
@@ -56,7 +60,7 @@ public final class MainJM extends JavaPlugin {
 						sb.append(version);
 					}
 				}
-				String version = sb.toString();
+				String version = sb.toString().replace("version: ", "");
 				if (version != null){
 					if (pluginVersion.contains("-a")){
 						getLogger().info("You are using a ALPHA version of JM!");
@@ -112,6 +116,9 @@ public final class MainJM extends JavaPlugin {
 	
 	public void loadYMLs(){
 		try {
+			pluginFile.delete();
+			pluginFile.getParentFile().mkdirs();
+			copy(getResource("plugin.yml"), pluginFile);
 			PluginJM.load(pluginFile);
 			ConfigJM.load(configFile);
 		} catch (Exception e){
@@ -129,6 +136,12 @@ public final class MainJM extends JavaPlugin {
 		}
 	}
 	
+	private boolean setupPermissions(){
+        RegisteredServiceProvider<Permission> rsp = getServer().getServicesManager().getRegistration(Permission.class);
+        perms = rsp.getProvider();
+        return perms != null;
+    }
+	
 	@Override
 	public void onEnable(){
 		pluginFile = new File(getDataFolder(), "plugin.yml");
@@ -144,7 +157,7 @@ public final class MainJM extends JavaPlugin {
 		getServer().getScheduler().runTaskTimerAsynchronously(this, new updateCheck(this), 40, 432000);
 		Plugin VanishNoPacket = getServer().getPluginManager().getPlugin("VanishNoPacket");
 		Plugin CMAPI = getServer().getPluginManager().getPlugin("CMAPI");
-		Plugin PermissionsEx = getServer().getPluginManager().getPlugin("PermissionsEx");
+		Plugin Vault = getServer().getPluginManager().getPlugin("Vault");
 		if (CMAPI == null){
 			getLogger().severe("CMAPI has not been found on your server! JoinMessages requires this!");
 			getLogger().severe("Please take the CMAPI jar out of the ZIP JoinMessages came with and put that into your plugins folder!");
@@ -152,12 +165,14 @@ public final class MainJM extends JavaPlugin {
 			return;
 		}
 		if (VanishNoPacket != null){
-			getLogger().info("VanishNoPacket has been found! Hooking with VanishNoPacket...");
+			getLogger().info("VanishNoPacket has been found! Hooking into VanishNoPacket...");
 			getServer().getPluginManager().registerEvents(this.vanishListener, this);
-			getLogger().info("Hooked with VanishNoPacket successfully!");
+			getLogger().info("Hooked into VanishNoPacket successfully!");
 		}
-		if (PermissionsEx != null){
-			
+		if (Vault != null){
+			getLogger().info("Vault has been found! Hooking into Vault...");
+			setupPermissions();
+			getLogger().info("Hooked into Vault successfully!");
 		}
 		getServer().getPluginManager().registerEvents(this.Listener, this);
 		getCommand("jm").setExecutor(new CommandJM(this));
