@@ -1,4 +1,4 @@
-package io.winneonsword.JM;
+package com.github.winneonsword.JM;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -145,15 +145,20 @@ public final class MainJM extends JavaPlugin {
 		getServer().getScheduler().runTaskTimerAsynchronously(this, new updateCheck(this), 40, 432000);
 		Plugin VanishNoPacket = getServer().getPluginManager().getPlugin("VanishNoPacket");
 		Plugin CMAPI = getServer().getPluginManager().getPlugin("CMAPI");
+		Plugin PermissionsEx = getServer().getPluginManager().getPlugin("PermissionsEx");
 		if (CMAPI == null){
 			getLogger().severe("CMAPI has not been found on your server! JoinMessages requires this!");
 			getLogger().severe("Please take the CMAPI jar out of the ZIP JoinMessages came with and put that into your plugins folder!");
 			getServer().getPluginManager().disablePlugin(this);
+			return;
 		}
 		if (VanishNoPacket != null){
 			getLogger().info("VanishNoPacket has been found! Hooking with VanishNoPacket...");
 			getServer().getPluginManager().registerEvents(this.vanishListener, this);
 			getLogger().info("Hooked with VanishNoPacket successfully!");
+		}
+		if (PermissionsEx != null){
+			
 		}
 		getServer().getPluginManager().registerEvents(this.Listener, this);
 		getCommand("jm").setExecutor(new CommandJM(this));

@@ -1,4 +1,4 @@
-package io.winneonsword.JM;
+package com.github.winneonsword.JM;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

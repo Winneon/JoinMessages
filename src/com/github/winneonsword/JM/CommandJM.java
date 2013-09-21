@@ -1,4 +1,4 @@
-package io.winneonsword.JM;
+package com.github.winneonsword.JM;
 
 import java.util.List;
 
