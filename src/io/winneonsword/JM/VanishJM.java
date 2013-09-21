@@ -1,4 +1,4 @@
-package io.winneonsword.joinmessages;
+package io.winneonsword.JM;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -8,11 +8,11 @@ import org.bukkit.event.Listener;
 import org.kitteh.vanish.VanishPerms;
 import org.kitteh.vanish.event.VanishStatusChangeEvent;
 
-public class vanish_listener implements Listener {
+public class VanishJM implements Listener {
 	
-	private joinmessages plugin;
+	private MainJM plugin;
 	
-	public vanish_listener(joinmessages plugin){
+	public VanishJM(MainJM plugin){
 		this.plugin = plugin;
 	}
 	

@@ -1,4 +1,4 @@
-package io.winneonsword.joinmessages;
+package io.winneonsword.JM;
 
 import java.util.List;
 import java.util.Random;
@@ -14,11 +14,11 @@ import org.bukkit.plugin.Plugin;
 
 import org.kitteh.vanish.VanishPerms;
 
-public class jm_listeners implements Listener{
+public class ListenersJM implements Listener{
 	
-	private joinmessages plugin;
+	private MainJM plugin;
 	
-	public jm_listeners(joinmessages plugin){
+	public ListenersJM(MainJM plugin){
 		this.plugin = plugin;
 	}
 	

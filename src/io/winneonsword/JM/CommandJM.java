@@ -1,4 +1,4 @@
-package io.winneonsword.joinmessages;
+package io.winneonsword.JM;
 
 import java.util.List;
 
@@ -9,11 +9,11 @@ import org.bukkit.entity.Player;
 
 import static com.github.winneonsword.CMAPI.API.ChatAPI.*;
 
-public class jm_command implements CommandExecutor{
+public class CommandJM implements CommandExecutor{
 	
-	private joinmessages plugin;
+	private MainJM plugin;
 	
-	public jm_command(joinmessages plugin){
+	public CommandJM(MainJM plugin){
 		this.plugin = plugin;
 	}
 	
@@ -44,8 +44,8 @@ public class jm_command implements CommandExecutor{
 			if (args[0].equalsIgnoreCase("list") && args.length == 1){
 				// The List Message Help Menu.
 				sender.sendMessage(rA(introMessage + " &7List Message Help Menu"));
-				sender.sendMessage(rA("  &c/jm list join &7- List the join messages and their corresponding"));
-				sender.sendMessage(rA("      &7ID."));
+				sender.sendMessage(rA("  &c/jm list join &7- List the join messages and their"));
+				sender.sendMessage(rA("      &7corresponding ID."));
 				sender.sendMessage(rA("  &c/jm list leave &7- List the leave messages and their"));
 				sender.sendMessage(rA("      &7corresponding ID."));
 				return true;

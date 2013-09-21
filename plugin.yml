@@ -1,5 +1,5 @@
 name: JoinMessages
-main: io.winneonsword.joinmessages.joinmessages
+main: io.winneonsword.JM.MainJM
 version: 1.3-a
 commands:
   jm:

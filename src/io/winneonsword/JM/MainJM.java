@@ -1,4 +1,4 @@
-package io.winneonsword.joinmessages;
+package io.winneonsword.JM;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -15,26 +15,26 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.Plugin;
 
-public final class joinmessages extends JavaPlugin {
+public final class MainJM extends JavaPlugin {
 	
-	joinmessages plugin;
+	MainJM plugin;
 	
 	public File pluginFile;
 	public File configFile;
 	public FileConfiguration PluginJM;
 	public FileConfiguration ConfigJM;
 	
-	public joinmessages(){
+	public MainJM(){
 		
 	}
 	
-	public final jm_listeners Listener = new jm_listeners(this);
-	public final vanish_listener vanishListener = new vanish_listener(this);
+	public final ListenersJM Listener = new ListenersJM(this);
+	public final VanishJM vanishListener = new VanishJM(this);
 	
 	private final class updateCheck implements Runnable{
-		private joinmessages plugin;
+		private MainJM plugin;
 		
-		public updateCheck(joinmessages plugin){
+		public updateCheck(MainJM plugin){
 			this.plugin = plugin;
 		}
 		
@@ -156,7 +156,7 @@ public final class joinmessages extends JavaPlugin {
 			getLogger().info("Hooked with VanishNoPacket successfully!");
 		}
 		getServer().getPluginManager().registerEvents(this.Listener, this);
-		getCommand("jm").setExecutor(new jm_command(this));
+		getCommand("jm").setExecutor(new CommandJM(this));
 		getLogger().info("Join Messages has been enabled! Meow!");
 		saveDefaultConfig();
 	}
