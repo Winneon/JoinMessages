@@ -120,10 +120,9 @@ public final class MainJM extends JavaPlugin {
 	}
 	
 	private void firstRun() throws Exception {
-		if (!(pluginFile.exists())){
-			pluginFile.getParentFile().mkdirs();
-			copy(getResource("plugin.yml"), pluginFile);
-		}
+		pluginFile.delete();
+		pluginFile.getParentFile().mkdirs();
+		copy(getResource("plugin.yml"), pluginFile);
 		if (!(configFile.exists())){
 			configFile.getParentFile().mkdirs();
 			copy(getResource("config.yml"), configFile);
