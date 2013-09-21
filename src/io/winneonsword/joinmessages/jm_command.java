@@ -19,9 +19,9 @@ public class jm_command implements CommandExecutor{
 	
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args){
 		if(cmd.getName().equalsIgnoreCase("jm")){
-			String introMessage = plugin.getConfig().getString("introMessage");
-			String messageColour = plugin.getConfig().getString("messageColour");
-			String nameColour = plugin.getConfig().getString("nameColour");
+			String introMessage = plugin.ConfigJM.getString("introMessage");
+			String messageColour = plugin.ConfigJM.getString("messageColour");
+			String nameColour = plugin.ConfigJM.getString("nameColour");
 			Player player = (Player) sender;
 			
 			if (args.length == 0){
@@ -38,7 +38,7 @@ public class jm_command implements CommandExecutor{
 				sender.sendMessage(rA("  &c/jm remove &7- Remove Message Help Menu. &8// &cStaff command"));
 				sender.sendMessage(rA("      &conly!"));
 				sender.sendMessage(rA("  &c/jm reload &7- Reloads the config file. &8// &cStaff command only!"));
-				sender.sendMessage(rA("&7Created by WS, v1.2.1-o"));
+				sender.sendMessage(rA("&7Created by WS, v1.3-o"));
 				return true;
 			}
 			if (args[0].equalsIgnoreCase("list") && args.length == 1){
@@ -52,7 +52,7 @@ public class jm_command implements CommandExecutor{
 			}
 			if (args[0].equalsIgnoreCase("list") && args[1].equalsIgnoreCase("join")){
 				// The /jm list join command.
-				List<String> joinMessageList = plugin.getConfig().getStringList("joinMessages");
+				List<String> joinMessageList = plugin.ConfigJM.getStringList("joinMessages");
 				
 				sender.sendMessage(rA(introMessage + " &7Join Messages:"));
 				for (int i = 1; i < joinMessageList.size() + 1; i++){
@@ -64,7 +64,7 @@ public class jm_command implements CommandExecutor{
 			}
 			if (args[0].equalsIgnoreCase("list") && args[1].equalsIgnoreCase("leave")){
 				// The /jm list leave command.
-				List<String> leaveMessageList = plugin.getConfig().getStringList("leaveMessages");
+				List<String> leaveMessageList = plugin.ConfigJM.getStringList("leaveMessages");
 				
 				sender.sendMessage(rA(introMessage + " &7Leave Messages:"));
 				for (int i = 1; i < leaveMessageList.size() + 1; i++){
@@ -99,11 +99,11 @@ public class jm_command implements CommandExecutor{
 						sender.sendMessage(rA(introMessage + " &cYou have not defined a playername! &7Be sure to include &c%p &7in your message to define the playername."));
 						return true;
 					}
-					List<String> joinMessageList = plugin.getConfig().getStringList("joinMessages");
+					List<String> joinMessageList = plugin.ConfigJM.getStringList("joinMessages");
 					int joinMessageID = joinMessageList.size() + 1;
 					
 					joinMessageList.add(message);
-					plugin.getConfig().set("joinMessages", joinMessageList);
+					plugin.ConfigJM.set("joinMessages", joinMessageList);
 					plugin.saveConfig();
 					sender.sendMessage(rA(introMessage + " &7Successfully added a join message. The message ID is &c" + joinMessageID + "&7."));
 					sender.sendMessage(rA(introMessage + " &7Here is what it will look like:"));
@@ -130,11 +130,11 @@ public class jm_command implements CommandExecutor{
 						sender.sendMessage(rA(introMessage + " &cYou have not defined a playername! &7Be sure to include &c%p &7in your message to define the playername."));
 						return true;
 					}
-					List<String> leaveMessageList = plugin.getConfig().getStringList("leaveMessages");
+					List<String> leaveMessageList = plugin.ConfigJM.getStringList("leaveMessages");
 					int leaveMessageID = leaveMessageList.size() + 1;
 					
 					leaveMessageList.add(message);
-					plugin.getConfig().set("leaveMessages", leaveMessageList);
+					plugin.ConfigJM.set("leaveMessages", leaveMessageList);
 					plugin.saveConfig();
 					sender.sendMessage(rA(introMessage + " &7Successfully added a leave message. The message ID is &c" + leaveMessageID + "&7."));
 					sender.sendMessage(rA(introMessage + " &7Here is what it will look like:"));
@@ -159,7 +159,7 @@ public class jm_command implements CommandExecutor{
 						sender.sendMessage(rA(introMessage + " &7Usage: &c/jm remove join <ID>&7. To view message IDs, type &c/jm list&7."));
 						return true;
 					}
-					List<String> joinMessageList = plugin.getConfig().getStringList("joinMessages");
+					List<String> joinMessageList = plugin.ConfigJM.getStringList("joinMessages");
 					try {
 						Integer.parseInt(args[2]);
 					} catch (NumberFormatException e){
@@ -178,7 +178,7 @@ public class jm_command implements CommandExecutor{
 					String message = joinMessageList.get(joinMessageID - 1);
 					
 					joinMessageList.remove(message);
-					plugin.getConfig().set("joinMessages", joinMessageList);
+					plugin.ConfigJM.set("joinMessages", joinMessageList);
 					plugin.saveConfig();
 					sender.sendMessage(rA(introMessage + " &7Successfully removed the join message which goes by the ID of &c" + joinMessageID + "&7."));
 					sender.sendMessage(rA(introMessage + " &7Here is the message you removed:"));
@@ -194,7 +194,7 @@ public class jm_command implements CommandExecutor{
 						sender.sendMessage(rA(introMessage + " &7Usage: &c/jm remove leave <ID>&7. To view message IDs, type &c/jm list&7."));
 						return true;
 					}
-					List<String> leaveMessageList = plugin.getConfig().getStringList("leaveMessages");
+					List<String> leaveMessageList = plugin.ConfigJM.getStringList("leaveMessages");
 					try {
 						Integer.parseInt(args[2]);
 					} catch (NumberFormatException e){
@@ -213,7 +213,7 @@ public class jm_command implements CommandExecutor{
 					String message = leaveMessageList.get(leaveMessageID - 1);
 					
 					leaveMessageList.remove(message);
-					plugin.getConfig().set("leaveMessages", leaveMessageList);
+					plugin.ConfigJM.set("leaveMessages", leaveMessageList);
 					plugin.saveConfig();
 					sender.sendMessage(rA(introMessage + " &7Successfully removed the leave message which goes by the ID of &c" + leaveMessageID + "&7."));
 					sender.sendMessage(rA(introMessage + " &7Here is the message you removed:"));
