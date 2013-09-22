@@ -4,7 +4,11 @@
   <artifactId>JoinMessages</artifactId>
   <version>1.3.1-a</version>
   <name>JoinMessages</name>
-  <description>Custom join / leave messages!</description>
+  <url>http://github.com/WinneonSword/Join-Messages</url>
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <jm-version>${project.version}</jm-version>
+  </properties>
   <dependencies>
     <dependency>
       <groupId>junit</groupId>

@@ -1,6 +1,6 @@
 name: JoinMessages
 main: com.github.winneonsword.JM.MainJM
-version: ${version}
+version: '${jm-version}'
 commands:
   jm:
     description: Host command.
