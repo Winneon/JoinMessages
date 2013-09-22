@@ -1,5 +1,11 @@
+<<<<<<< HEAD
 .settings/
 target/
 src/lib/
+=======
+bin/
+.settings/
+target/
+>>>>>>> 8eed4cfebdd3423838f1d910665805f007a2eccc
 *.classpath
 *.project

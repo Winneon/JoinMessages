@@ -1,0 +1,11 @@
+﻿introMessage: '&e[ &7jm &e]'
+messageColour: e
+nameColour: 7
+joinMessages:
+- Look out, it's %p joining the server!
+- Holy batman, %p has appeared!
+- Oh! Look who decided to join us today! (%p)
+leaveMessages:
+- Aww, it seems %p has left us.
+- It seems %p has hit the bucket, not in a literal sence.
+- '%p just disappeared out of thin air!'
