@@ -15,6 +15,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredServiceProvider;
+
 import net.milkbowl.vault.permission.Permission;
 
 public final class MainJM extends JavaPlugin {
@@ -46,7 +47,7 @@ public final class MainJM extends JavaPlugin {
 		
 		@Override
 		public void run(){
-			String pluginVersion = plugin.PluginJM.getString("version");
+			String pluginVersion = "v" + "${version}";
 			try {
 				// Credit to mbax for this version checker script. :)
 				final URLConnection connection = new URL("https://raw.github.com/WinneonSword/Join-Messages/master/plugin.yml").openConnection();

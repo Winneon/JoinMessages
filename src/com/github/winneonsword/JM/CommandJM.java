@@ -4,11 +4,18 @@ import java.util.List;
 
 //import net.milkbowl.vault.permission.Permission;
 
+
+
+
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 //import org.bukkit.plugin.Plugin;
+
+import org.xeustechnologies.googleapi.spelling.SpellChecker;
+import org.xeustechnologies.googleapi.spelling.SpellCorrection;
+import org.xeustechnologies.googleapi.spelling.SpellResponse;
 
 import static com.github.winneonsword.CMAPI.API.ChatAPI.*;
 
@@ -248,6 +255,17 @@ public class CommandJM implements CommandExecutor{
 					return true;
 				}
 				return true;
+			}
+			if (args[0].equalsIgnoreCase("spell")){
+				SpellChecker check = new SpellChecker();
+				StringBuilder initial = new StringBuilder();
+				
+				for (int i = 1; i < args.length; i++){
+					initial.append(' ').append(args[i]);
+				}
+				SpellResponse message = check.check(initial.toString().replaceFirst(" ", ""));
+				SpellCorrection[] sc = message.getCorrections();
+				sender.sendMessage(sc[0].toString());
 			}
 			if (args[0].equalsIgnoreCase("reload")){
 				// The reload command.
