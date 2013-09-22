@@ -38,7 +38,6 @@ public final class MainJM extends JavaPlugin {
 	
 	private final class updateCheck implements Runnable{
 		
-		@SuppressWarnings(value = "unused")
 		private MainJM plugin;
 		
 		public updateCheck(MainJM plugin){
@@ -47,10 +46,10 @@ public final class MainJM extends JavaPlugin {
 		
 		@Override
 		public void run(){
-			String pluginVersion = "v" + "${version}";
+			String pluginVersion = plugin.PluginJM.getString("version");
 			try {
 				// Credit to mbax for this version checker script. :)
-				final URLConnection connection = new URL("https://raw.github.com/WinneonSword/Join-Messages/master/plugin.yml").openConnection();
+				final URLConnection connection = new URL("https://raw.github.com/WinneonSword/Join-Messages/master/src/main/resources/plugin.yml").openConnection();
 				connection.setConnectTimeout(8000);
 				connection.setReadTimeout(15000);
 				connection.setRequestProperty("User-agent", "Join Messages");
@@ -89,6 +88,7 @@ public final class MainJM extends JavaPlugin {
 			}
 			getLogger().severe("Could not check if plugin was up to date! Is the file missing, or is the server down?");
 		}
+		
 	}
 	
 	private void copy(InputStream in, File file){
