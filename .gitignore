@@ -1,0 +1,5 @@
+.settings/
+target/
+src/lib/
+*.classpath
+*.project
