@@ -49,18 +49,18 @@ public final class MainJM extends JavaPlugin {
 			String pluginVersion = plugin.PluginJM.getString("version");
 			try {
 				// Credit to mbax for this version checker script. :)
-				final URLConnection connection = new URL("https://raw.github.com/WinneonSword/Join-Messages/master/src/main/resources/plugin.yml").openConnection();
+				final URLConnection connection = new URL("https://raw.github.com/WinneonSword/JoinMessages/master/src/main/resources/version").openConnection();
 				connection.setConnectTimeout(8000);
 				connection.setReadTimeout(15000);
-				connection.setRequestProperty("User-agent", "Join Messages");
+				connection.setRequestProperty("User-agent", "JoinMessages");
 				final LineNumberReader reader = new LineNumberReader(new InputStreamReader(connection.getInputStream()));
 				StringBuilder sb = new StringBuilder();
 				for (String version = null; (version = reader.readLine()) != null;){
-					if (reader.getLineNumber() == 3){
+					if (reader.getLineNumber() == 1){
 						sb.append(version);
 					}
 				}
-				String version = sb.toString().replace("version: ", "");
+				String version = sb.toString();
 				if (version != null){
 					if (pluginVersion.contains("-a")){
 						getLogger().info("You are using a ALPHA version of JM!");

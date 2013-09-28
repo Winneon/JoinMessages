@@ -249,6 +249,7 @@ public class CommandJM implements CommandExecutor{
 				return true;
 			}
 			if (args[0].equalsIgnoreCase("spell")){
+				sender.sendMessage(rA(introMessage + " &cWhat do you think you're doing! This feature is not implemented yet! Begone!"));
 				return true;
 			}
 			if (args[0].equalsIgnoreCase("reload")){
