@@ -30,7 +30,7 @@ public class CommandJM implements CommandExecutor{
 			
 			if (args.length == 0){
 				// Name & version number.
-				sender.sendMessage(rA(introMessage + " &7Join Messages, v" + plugin.PluginJM.getString("version")));
+				sender.sendMessage(rA(introMessage + " &7JoinMessages, v" + plugin.PluginJM.getString("version")));
 				return true;
 			}
 			if (args[0].equalsIgnoreCase("?") || args[0].equalsIgnoreCase("help")){
