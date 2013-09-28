@@ -75,7 +75,7 @@ public final class MainJM extends JavaPlugin {
 						return;
 					}
 					if (!(pluginVersion.equals(version))){
-						getLogger().info("Found a newer version of Join Messages available: " + version);
+						getLogger().info("Found a newer version of JoinMessages available: " + version);
 						getLogger().info("To download the newest version, go to: http://dev.bukkit.org/bukkit-plugins/join-messages/");
 						return;
 					}
