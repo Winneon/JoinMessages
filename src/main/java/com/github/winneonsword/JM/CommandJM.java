@@ -248,6 +248,9 @@ public class CommandJM implements CommandExecutor{
 				}
 				return true;
 			}
+			if (args[0].equalsIgnoreCase("spell")){
+				return true;
+			}
 			if (args[0].equalsIgnoreCase("reload")){
 				// The reload command.
 				if (player.hasPermission("joinmessages.reload")){

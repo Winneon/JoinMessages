@@ -28,19 +28,19 @@ public class VanishJM implements Listener {
 			plugin.getConfig().set("Users." + e.getPlayer().getName() + ".vanished", true);
 			plugin.saveConfig();
 			if (VanishPerms.joinWithoutAnnounce(p) || VanishPerms.joinVanished(p)){
-				e.getPlayer().sendMessage(rA(introMessage + " &7You are now omit from sending join and leave messages."));
+				p.sendMessage(rA(introMessage + " &7You are now omit from sending join and leave messages."));
 				return;
 			}
-			e.getPlayer().sendMessage(rA(introMessage + " &7You are now omit from sending leave messages."));
+			p.sendMessage(rA(introMessage + " &7You are now omit from sending leave messages."));
 			return;
 		}
 		String introMessage = plugin.getConfig().getString("introMessage");
 		plugin.getConfig().set("Users", null);
 		plugin.saveConfig();
 		if (VanishPerms.joinWithoutAnnounce(p) || VanishPerms.joinVanished(p)){
-			e.getPlayer().sendMessage(rA(introMessage + " &7You are no longer omit from sending join and leave messages."));
+			p.sendMessage(rA(introMessage + " &7You are no longer omit from sending join and leave messages."));
 			return;
 		}
-		e.getPlayer().sendMessage(rA(introMessage + " &7You are no longer omit from sending leave messages."));
+		p.sendMessage(rA(introMessage + " &7You are no longer omit from sending leave messages."));
 	}
 }
